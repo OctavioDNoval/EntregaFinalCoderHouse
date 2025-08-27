@@ -1,15 +1,15 @@
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import HomeScreen from "./src/screens/HomeScreen";
-import HeaderComponent from "./src/components/HeaderComponent";
+import { NavigationContainer } from "@react-navigation/native";
+import TabsNavigator from "./src/navigation/Tabs/TabsNavigator";
 
 export default function App() {
 	return (
-		<SafeAreaView>
-			<View style={styles.container}>
-				<HeaderComponent />
+		<SafeAreaView style={{ flex: 1 }}>
+			<NavigationContainer>
 				<StatusBar style="auto" />
-			</View>
+				<TabsNavigator />
+			</NavigationContainer>
 		</SafeAreaView>
 	);
 }
