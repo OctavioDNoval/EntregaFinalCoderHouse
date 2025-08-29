@@ -1,0 +1,13 @@
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+const baseURL = process.env.EXPO_PUBLIC_RTDB_URL;
+
+export const shopApi = createApi({
+    reducerPath: "shopApi",
+    baseQuery: fetchBaseQuery({ baseUrl: baseURL }),
+    endpoints: (builder) => ({
+        getCategories: builder.query({ query: () => "Categorias.json" }),
+    }),
+});
+
+export const { useGetCategoriesQuery } = shopApi;

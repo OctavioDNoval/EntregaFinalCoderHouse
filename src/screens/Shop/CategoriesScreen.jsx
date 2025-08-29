@@ -1,10 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
+import { useGetCategoriesQuery } from "../../Services/shopAPI";
+import { useDispatch } from "react-redux";
 
 const CategoriesScreen = () => {
+    const { data: categories, isLoading, error } = useGetCategoriesQuery();
+    const dispatch = useDispatch();
+
     return (
-        <View>
-            <Text>CategoriesScreen</Text>
-        </View>
+        <FlatList
+            data={categories}
+            renderItem={({ item }) => <Text>{item.name}</Text>}
+            keyExtractor={(item) => item.id.toString()}
+        />
     );
 };
 

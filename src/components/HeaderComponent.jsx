@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
         height: height * 0.1,
         justifyContent: "center",
         alignItems: "center",
-        position: "absolute",
-        top: 0,
+        /*position: "absolute",
+        top: 0,*/
     },
     title: {
         color: "#fff",
