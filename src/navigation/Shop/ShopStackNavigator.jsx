@@ -1,14 +1,24 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import CategoriesScreen from "../../screens/Shop/CategoriesScreen";
+import ProductScreen from "../../screens/Shop/ProductScreen";
+import SelectedProductScreen from "../../screens/Shop/SelectedProductScreen";
+import HeaderComponent from "../../components/HeaderComponent";
+
+const Stack = createStackNavigator();
 
 const ShopStackNavigator = () => {
-	return (
-		<View>
-			<Text>ShopStackNavigator</Text>
-		</View>
-	);
+    return (
+        <Stack.Navigator
+            initialRouteName="categorias"
+            screenOptions={{
+                header: () => <HeaderComponent subtitle="Categorias" />,
+            }}
+        >
+            <Stack.Screen name="categorias" component={CategoriesScreen} />
+            <Stack.Screen name="productos" component={ProductScreen} />
+            <Stack.Screen name="Producto seleccionado" component={SelectedProductScreen} />
+        </Stack.Navigator>
+    );
 };
 
 export default ShopStackNavigator;
-
-const styles = StyleSheet.create({});

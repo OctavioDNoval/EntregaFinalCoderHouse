@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
 
-const CategoriesScreen = () => {
+const SelectedProductScreen = () => {
     return (
         <View>
-            <Text>CategoriesScreen</Text>
+            <Text>SelectedProductScreen</Text>
         </View>
     );
 };
 
-export default CategoriesScreen;
+export default SelectedProductScreen;
 
 const styles = StyleSheet.create({});
