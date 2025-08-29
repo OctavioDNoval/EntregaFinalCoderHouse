@@ -1,17 +1,28 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useGetCategoriesQuery } from "../../Services/shopAPI";
 import { useDispatch } from "react-redux";
+import CategorieContainerComponent from "../../components/CategorieContainerComponent";
 
 const CategoriesScreen = () => {
     const { data: categories, isLoading, error } = useGetCategoriesQuery();
     const dispatch = useDispatch();
 
+    const renderCategorie = ({ item }) => {
+        return (
+            <Pressable>
+                <CategorieContainerComponent img={item.img} name={item.name} />
+            </Pressable>
+        );
+    };
+
     return (
-        <FlatList
-            data={categories}
-            renderItem={({ item }) => <Text>{item.name}</Text>}
-            keyExtractor={(item) => item.id.toString()}
-        />
+        <>
+            <FlatList
+                data={categories}
+                renderItem={renderCategorie}
+                keyExtractor={(item) => item.id.toString()}
+            ></FlatList>
+        </>
     );
 };
 
