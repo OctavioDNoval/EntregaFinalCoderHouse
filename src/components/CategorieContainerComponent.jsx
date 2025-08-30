@@ -16,14 +16,15 @@ export default CategorieContainerComponent;
 
 const styles = StyleSheet.create({
     container: {
-        width: width * 0.4,
+        height: width * 0.4,
         borderColor: "#000",
         borderWidth: 2,
         borderStyle: "solid",
-        aspectRatio: 1 / 1,
+        //aspectRatio: 1 / 1,
         overflow: "hidden",
         justifyContent: "center",
         alignItems: "center",
+        flex: 1,
     },
     img: {
         ...StyleSheet.absoluteFillObject,
@@ -37,5 +38,7 @@ const styles = StyleSheet.create({
     text: {
         color: "#fff",
         fontWeight: "700",
+        zIndex: 2,
+        fontSize: 20,
     },
 });
