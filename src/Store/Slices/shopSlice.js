@@ -13,7 +13,7 @@ const shopSlice = createSlice({
             state.categorySelected = action.payload;
         },
         setCategoryName: (state, action) => {
-            state.categorySelectedName.payload;
+            state.categorySelectedName = action.payload;
         },
         setProductSelected: (state, action) => {
             state.productSelected = action.payload;

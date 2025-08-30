@@ -9,7 +9,6 @@ const Stack = createStackNavigator();
 
 const ShopStackNavigator = () => {
     const categorySelectedName = useSelector((state) => state.shopSlice.categorySelectedName);
-
     return (
         <Stack.Navigator
             initialRouteName="categorias"
@@ -20,7 +19,7 @@ const ShopStackNavigator = () => {
             }}
         >
             <Stack.Screen name="categorias" component={CategoriesScreen} />
-            <Stack.Screen name="productos" component={ProductScreen} />
+            <Stack.Screen name="productos" component={ProductScreen} options={() => {}} />
             <Stack.Screen name="Producto seleccionado" component={SelectedProductScreen} />
         </Stack.Navigator>
     );

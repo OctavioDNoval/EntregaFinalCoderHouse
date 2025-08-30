@@ -13,7 +13,7 @@ export const shopApi = createApi({
             },*/
         }),
         getProductsByCategory: builder.query({
-            query: (category) => `Products.json?orderBy="categoryId"&equalTo${category}`,
+            query: (category) => `Productos.json?orderBy="idcategoria"&equalTo=${category}`,
             transformResponse: (res) => {
                 return Object.values(res);
             },
