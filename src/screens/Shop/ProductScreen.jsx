@@ -11,6 +11,7 @@ const ProductScreen = () => {
 
     console.log(categorySelectedID);
     console.log(productsFiltered);
+    console.log(isLoading)
 
     const renderProduct = ({ item }) => {
         return (

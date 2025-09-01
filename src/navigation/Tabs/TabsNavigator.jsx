@@ -4,6 +4,7 @@ import CartScreen from "../../screens/Cart/CartScreen";
 import CategoriesScreen from "../../screens/Shop/CategoriesScreen";
 import ShopStackNavigator from "../Shop/ShopStackNavigator";
 import HomeStackNaigator from "../Shop/HomeStackNaigator";
+import CartStackNavigator from "../Cart/CartStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +23,7 @@ const TabsNavigator = () => {
             }}
         >
             <Tab.Screen name="Home" component={HomeStackNaigator} />
-            <Tab.Screen name="Cart" component={CartScreen} />
+            <Tab.Screen name="Cart" component={CartStackNavigator} />
             <Tab.Screen name="categories" component={ShopStackNavigator} />
         </Tab.Navigator>
     );
