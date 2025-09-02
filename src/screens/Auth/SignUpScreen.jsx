@@ -4,7 +4,16 @@ import React from "react";
 const SignUpScreen = () => {
 	return (
 		<View>
-			<Text>SignUpScreen</Text>
+			<TextInput
+				onChangeText={(text) => setEmail(text)}
+				placeholder="Email"
+				style={styles.input}
+			/>
+			<TextInput
+				onChangeText={(text) => setPassword(text)}
+				placeholder="Contrasenia"
+				style={styles.input}
+			/>
 		</View>
 	);
 };

@@ -1,19 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { useLogInMutation } from "../../Services/authAPI";
+import { useLoginMutation } from "../../Services/authAPI";
 import { useDispatch } from "react-redux";
+import { colors } from "../../global/colors";
+import { setUserEmail } from "../../Store/Slices/userSlice";
 
-const LogInScreen = () => {
+const LogInScreen = ({ navigation }) => {
 	//aca vamos a tratar las variables de estado de esta pantalla
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	//aca traemos la mutacion de la api, con esto vamos a controlar
 	//el inicio de sesion
-	//const [triggerLogin, result] = useLogInMutation();
+	const [triggerLogin, result] = useLoginMutation();
 	const dispatch = useDispatch();
 
-	const logInHandler = () => {};
+	const logInHandler = () => {
+		//Usamos la query mandando los parametros de autenticacion, esto todavia no va a cambiar
+		//la screen porque falta hacer el dipatch al userSlice donde va a estar la info del usuario
+		//y cuando el email deja de estar vacio la Screen en el mainNavigator va a cambiar
+		triggerLogin({ email, password });
+	};
+
+	useEffect(() => {
+		console.log(result);
+		if (result.isSuccess) {
+			dispatch(setUserEmail(result.data.email));
+		} else if (result.status === "rejected") {
+			console.log(result.error);
+		}
+	}, [result]);
 
 	return (
 		<View style={styles.conatiner}>
@@ -31,6 +47,9 @@ const LogInScreen = () => {
 			<Pressable onPress={logInHandler} style={styles.loginBTN}>
 				<Text style={styles.textBTN}>Entrar</Text>
 			</Pressable>
+			<Pressable onPress={() => navigation.navigate("signup")}>
+				<Text style={styles.createAccount}>Crear Cuenta</Text>
+			</Pressable>
 		</View>
 	);
 };
@@ -42,7 +61,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		gap: 16,
+		gap: 24,
 	},
 	input: {
 		width: "60%",
@@ -54,12 +73,15 @@ const styles = StyleSheet.create({
 	loginBTN: {
 		width: "60%",
 		height: 32,
-		backgroundColor: "#FF8400",
+		backgroundColor: colors.secondary,
 		borderRadius: 16,
 		justifyContent: "center",
 		alignItems: "center",
 	},
 	textBTN: {
 		color: "#fff",
+	},
+	createAccount: {
+		color: colors.secondary,
 	},
 });

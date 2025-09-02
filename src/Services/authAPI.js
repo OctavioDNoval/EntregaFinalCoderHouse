@@ -1,7 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseURL = process.env.EXPO_PUBLIC_AUTH_URL;
-const API_KEY = process.env.AUTH_API;
+const API_KEY = process.env.API_KEY;
 
 export const authAPI = createApi({
 	//Nombre que le damos al slice
@@ -16,14 +16,14 @@ export const authAPI = createApi({
 	endpoints: (builder) => ({
 		signup: builder.mutation({
 			query: (auth) => ({
-				url: `accounts:signup?key=${API_KEY}`,
+				url: `accounts:signUp?key=${API_KEY}`,
 				method: "POST",
 				body: auth,
 			}),
 		}),
 		login: builder.mutation({
 			query: (auth) => ({
-				url: `accounts:signInWithPassword?key=${API_KEY}`,
+				url: `accounts:signInWithPassword?key=AIzaSyDjXEJRRy6YkATIrvaErHtqBGcG5vsXtac`,
 				method: "POST",
 				body: auth,
 			}),
