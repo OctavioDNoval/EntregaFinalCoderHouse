@@ -10,18 +10,46 @@ import {
 import { colors } from "../../global/colors";
 import { useEffect, useState } from "react";
 import { useSignupMutation } from "../../Services/authAPI";
-import { setUserEmail } from "../../Store/Slices/userSlice";
+import {
+	setLocalId,
+	setUserCel,
+	setUserEmail,
+	setUserLastName,
+} from "../../Store/Slices/userSlice";
 import { useDispatch } from "react-redux";
+import {
+	useUpdateProfileCelMutation,
+	useUpdateProfileLastNameMutation,
+	useUpdateProfileNameMutation,
+} from "../../Services/profileAPI";
 
 const SignUpScreen = ({ navigation }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [passwordConfirm, setPasswordConfirm] = useState("");
+	const [name, setName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [cel, setCel] = useState("");
+
+	const [UpdateName] = useUpdateProfileNameMutation();
+	const [UpdateLastName] = useUpdateProfileLastNameMutation();
+	const [UpdateCel] = useUpdateProfileCelMutation();
+
 	const [errorMsg, setErrorMsg] = useState("");
 	const [showModal, setShowModal] = useState(false);
 
 	const [triggerSignUp, result] = useSignupMutation();
 	const dispatch = useDispatch();
+
+	const saveData = async (localId) => {
+		try {
+			await UpdateName({ localId, name });
+			await UpdateLastName({ localId, lastName });
+			await UpdateCel({ localId, cel });
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const handleSignUp = () => {
 		if (passwordConfirm != password) {
@@ -36,9 +64,11 @@ const SignUpScreen = ({ navigation }) => {
 	useEffect(() => {
 		if (result.isSuccess) {
 			setShowModal(true);
+			saveData(result.data.localId);
 			setTimeout(() => {
 				setShowModal(false);
 				dispatch(setUserEmail(email));
+				dispatch(setLocalId(result.localId));
 			}, 2000);
 		}
 	}, [result]);
@@ -63,6 +93,28 @@ const SignUpScreen = ({ navigation }) => {
 			/>
 
 			{errorMsg ? <Text style={styles.errorMsg}>{errorMsg}</Text> : null}
+
+			<View style={styles.line}></View>
+			<Text style={styles.infoText}>Info. Personal</Text>
+
+			{/*Nombre*/}
+			<TextInput
+				onChangeText={(text) => setName(text)}
+				placeholder="Nombre"
+				style={styles.input}
+			/>
+			{/*Apelldio*/}
+			<TextInput
+				onChangeText={(text) => setLastName(text)}
+				placeholder="Apellido"
+				style={styles.input}
+			/>
+			{/*Celular*/}
+			<TextInput
+				onChangeText={(text) => setCel(text)}
+				placeholder="Celular"
+				style={styles.input}
+			/>
 
 			<Pressable onPress={handleSignUp} style={styles.loginBTN}>
 				<Text style={styles.textBTN}>Crear</Text>
@@ -102,6 +154,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
+	},
+	line: {
+		height: 1,
+		width: "75%",
+		backgroundColor: "#bbb",
 	},
 	modalContainer: {
 		backgroundColor: "rgba(0,0,0,0.5)",
