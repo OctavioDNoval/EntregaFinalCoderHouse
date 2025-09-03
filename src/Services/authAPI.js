@@ -16,7 +16,7 @@ export const authAPI = createApi({
 	endpoints: (builder) => ({
 		signup: builder.mutation({
 			query: (auth) => ({
-				url: `accounts:signUp?key=${API_KEY}`,
+				url: `accounts:signUp?key=AIzaSyDjXEJRRy6YkATIrvaErHtqBGcG5vsXtac`,
 				method: "POST",
 				body: auth,
 			}),
