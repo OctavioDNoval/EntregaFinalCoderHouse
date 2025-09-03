@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { useLoginMutation } from "../../Services/authAPI";
 import { useDispatch } from "react-redux";
 import { colors } from "../../global/colors";
-import { setUserEmail } from "../../Store/Slices/userSlice";
+import { setLocalId, setUserEmail } from "../../Store/Slices/userSlice";
 
 const LogInScreen = ({ navigation }) => {
 	//aca vamos a tratar las variables de estado de esta pantalla
@@ -26,6 +26,7 @@ const LogInScreen = ({ navigation }) => {
 		console.log(result);
 		if (result.isSuccess) {
 			dispatch(setUserEmail(result.data.email));
+			dispatch(setLocalId(result.data.localId));
 		} else if (result.status === "rejected") {
 			console.log(result.error);
 		}

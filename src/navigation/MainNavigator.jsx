@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import TabsNavigator from "./Tabs/TabsNavigator";
 import AuthStackNavigator from "./Auth/AuthStackNavigator";
+import ProfileStackNavigator from "./Profile/ProfileStackNavigator";
 
 const MainNavigator = () => {
 	/**
