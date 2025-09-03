@@ -1,17 +1,23 @@
 import { StyleSheet, Text, View } from "react-native";
+import { useSelector } from "react-redux";
 
 const InfoShowComponent = () => {
-	return (
-		<View style={styles.container}>
-			<Text>InfoShowComponent</Text>
-		</View>
-	);
+    const profileName = useSelector((state) => state.userSlice.name);
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.infoRow}>
+                <Text>Nombre</Text>
+                <Text>{profileName}</Text>
+            </View>
+        </View>
+    );
 };
 
 export default InfoShowComponent;
 
 const styles = StyleSheet.create({
-	container: {
-		backgroundColor: "#fff",
-	},
+    container: {
+        backgroundColor: "#fff",
+    },
 });
