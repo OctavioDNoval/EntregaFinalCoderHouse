@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import InfoShowComponent from "./InfoShowComponent";
 import LocationShowComponent from "./LocationShowComponent";
 
-const InfoWrapperComponent = () => {
+const InfoWrapperComponent = ({ profile }) => {
 	const [selected, setSelected] = useState("info");
 
 	return (
@@ -31,7 +31,7 @@ const InfoWrapperComponent = () => {
 				</Pressable>
 			</View>
 			{selected === "" || selected === "info" ? (
-				<InfoShowComponent />
+				<InfoShowComponent profile={profile} />
 			) : selected === "location" ? (
 				<LocationShowComponent />
 			) : (
