@@ -34,6 +34,14 @@ const userSlice = createSlice({
 			state.lastname = action.payload.lastname;
 			state.cel = action.payload.cel;
 		},
+		logout: (state) => {
+			state.email = "";
+			state.localId = "";
+			state.name = "";
+			state.lastname = "";
+			state.cel = "";
+			state.image = "";
+		},
 	},
 });
 
@@ -44,5 +52,7 @@ export const {
 	setUserName,
 	setUserLastName,
 	setUserCel,
+	logout,
+	setUser,
 } = userSlice.actions;
 export default userSlice.reducer;

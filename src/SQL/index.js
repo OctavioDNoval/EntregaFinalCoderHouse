@@ -18,14 +18,14 @@ import * as SQLite from "expo-sqlite";
 let db;
 
 export const initDB = async () => {
-    if (!db) {
-        db = await SQLite.openDatabaseAsync("bknDB.db");
-    }
+	if (!db) {
+		db = await SQLite.openDatabaseAsync("bknDB.db");
+	}
 };
 
 export const initSessionsTable = async () => {
-    await initDB();
-    await db.execAsync(` 
+	await initDB();
+	await db.execAsync(` 
         CREATE TABLE IF NOT EXISTS sessions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             localId TEXT,
@@ -33,20 +33,23 @@ export const initSessionsTable = async () => {
 };
 
 export const saveSession = async (localId, email) => {
-    await initDB();
+	await initDB();
 
-    await db.runAsync("DELETE FROM sessions");
-    await db.runAsync("INSERT INTO sessions (localId,email) VALUES (?,?);", [localId, email]);
+	await db.runAsync("DELETE FROM sessions");
+	await db.runAsync("INSERT INTO sessions (localId,email) VALUES (?,?);", [
+		localId,
+		email,
+	]);
 };
 
 export const getSession = async () => {
-    await initDB();
+	await initDB();
 
-    const data = await db.getAllAsync("SELECT * FROM sessions LIMIT 1;");
-    return data.length > 0 ? result[0] : null;
+	const data = await db.getAllAsync("SELECT * FROM sessions LIMIT 1;");
+	return data.length > 0 ? data[0] : null;
 };
 
 export const clearSession = async () => {
-    await initDB();
-    await db.runAsync("DELETE FROM sessions;");
+	await initDB();
+	await db.runAsync("DELETE FROM sessions;");
 };

@@ -8,6 +8,7 @@ import {
 	setUserName,
 } from "../../Store/Slices/userSlice";
 import { useEffect } from "react";
+import CarruselImageComponent from "../../components/CarruselImageComponent";
 
 const HomeScreen = () => {
 	const id = useSelector((state) => state.userSlice.localId);
@@ -24,8 +25,8 @@ const HomeScreen = () => {
 	}, [isSuccess, data]);
 
 	return (
-		<View>
-			<Text>HomeScreen</Text>
+		<View style={styles.container}>
+			<CarruselImageComponent />
 		</View>
 	);
 };
