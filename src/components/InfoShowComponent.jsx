@@ -16,16 +16,16 @@ const InfoShowComponent = ({ profile }) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.infoRow}>
-				<Text>Nombre</Text>
-				<Text>{profile.name}</Text>
+				<Text style={styles.titleRow}>Nombre</Text>
+				<Text style={styles.info}>{profile.name}</Text>
 			</View>
 			<View style={styles.infoRow}>
-				<Text>Apelldio</Text>
-				<Text>{profile.lastname}</Text>
+				<Text style={styles.titleRow}>Apelldio</Text>
+				<Text style={styles.info}>{profile.lastname}</Text>
 			</View>
 			<View style={styles.infoRow}>
-				<Text>Celular</Text>
-				<Text>{profile.cel}</Text>
+				<Text style={styles.titleRow}>Celular</Text>
+				<Text style={styles.info}>{profile.cel}</Text>
 			</View>
 		</View>
 	);
@@ -36,5 +36,17 @@ export default InfoShowComponent;
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: "#fff",
+		gap: 8,
+	},
+	infoRow: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		paddingHorizontal: 24,
+	},
+	titleRow: {
+		fontWeight: "700",
+	},
+	info: {
+		fontStyle: "italic",
 	},
 });

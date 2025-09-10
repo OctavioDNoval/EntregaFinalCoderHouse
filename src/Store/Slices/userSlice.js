@@ -29,6 +29,11 @@ const userSlice = createSlice({
 		setUserCel: (state, action) => {
 			state.cel = action.payload;
 		},
+		setUser: (state, action) => {
+			state.name = action.payload.name;
+			state.lastname = action.payload.lastname;
+			state.cel = action.payload.cel;
+		},
 	},
 });
 
