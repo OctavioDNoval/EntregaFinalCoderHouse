@@ -34,12 +34,14 @@ export const initSessionsTable = async () => {
 
 export const saveSession = async (localId, email) => {
     await initDB();
+
     await db.runAsync("DELETE FROM sessions");
     await db.runAsync("INSERT INTO sessions (localId,email) VALUES (?,?);", [localId, email]);
 };
 
 export const getSession = async () => {
     await initDB();
+
     const data = await db.getAllAsync("SELECT * FROM sessions LIMIT 1;");
     return data.lenght > 0 ? result[0] : null;
 };

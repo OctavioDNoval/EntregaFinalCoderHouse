@@ -32,6 +32,7 @@ const LogInScreen = ({ navigation }) => {
                 try {
                     if (persistSession) {
                         await saveSession(id, email);
+                        console.log("se guardo la session");
                     } else {
                         await clearSession();
                     }
