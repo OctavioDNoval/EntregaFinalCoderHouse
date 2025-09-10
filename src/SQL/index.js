@@ -43,7 +43,7 @@ export const getSession = async () => {
     await initDB();
 
     const data = await db.getAllAsync("SELECT * FROM sessions LIMIT 1;");
-    return data.lenght > 0 ? result[0] : null;
+    return data.length > 0 ? result[0] : null;
 };
 
 export const clearSession = async () => {
