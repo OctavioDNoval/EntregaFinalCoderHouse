@@ -47,6 +47,22 @@ export const profileAPI = createApi({
 		getProfile: builder.query({
 			query: (localId) => `profileData/${localId}.json`,
 		}),
+		addProductToCart: builder.mutation({
+			query: ({ localId, product }) => ({
+				url: `profileData/${localId}/cart/${product.id}.json`,
+				method: "PATCH",
+				body: product,
+			}),
+		}),
+		removeProductFromCart: builder.mutation({
+			query: ({ localId, productId }) => ({
+				url: `profileData/${localId}/cart/${productId}.json`,
+				method: "DELETE",
+			}),
+		}),
+		getCart: builder.query({
+			query: (localId) => `profileData/${localId}/cart.json`,
+		}),
 	}),
 });
 
@@ -57,4 +73,7 @@ export const {
 	useUpdateProfileLastNameMutation,
 	useUpdateProfileCelMutation,
 	useGetProfileQuery,
+	useAddProductToCartMutation,
+	useRemoveProductFromCartMutation,
+	useGetCartQuery,
 } = profileAPI;
