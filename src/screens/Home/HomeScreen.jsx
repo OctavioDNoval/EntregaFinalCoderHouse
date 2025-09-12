@@ -1,4 +1,11 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+	FlatList,
+	Pressable,
+	ScrollView,
+	StyleSheet,
+	Text,
+	View,
+} from "react-native";
 import { useGetProfileQuery } from "../../Services/profileAPI";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,16 +17,20 @@ import {
 import { useEffect, useMemo } from "react";
 import CarruselImageComponent from "../../components/CarruselImageComponent";
 import { useGetProductsQuery } from "../../Services/shopAPI";
-import OfertProductComponent from "../../components/OfertProductComponent";
+import ProductContainerComponent from "../../components/ProductContainerComponent";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
 	const id = useSelector((state) => state.userSlice.localId);
 	const { data, isSuccess } = useGetProfileQuery(id, { skip: !id });
 	const dispatch = useDispatch();
 	const { data: products, isLoading } = useGetProductsQuery();
 
 	const ofertProducts = useMemo(() => {
-		return products ? products.filter((p) => p.hasDiscount) : [];
+		return products
+			? products
+					.filter((p) => p.hasDiscount && p.discount > 0.3)
+					.sort((a, b) => b.discount - a.discount)
+			: [];
 	}, [products]);
 
 	useEffect(() => {
@@ -36,28 +47,50 @@ const HomeScreen = () => {
 	}, [isSuccess, data]);
 
 	const renderOfertproducts = ({ item }) => {
-		<Pressable>
-			<OfertProductComponent item={item} />
-		</Pressable>;
+		return (
+			<Pressable
+				onPress={() =>
+					navigation.navigate("producto seleccionado", { product: item })
+				}
+			>
+				{console.log(item.name)}
+				<ProductContainerComponent item={item} />
+			</Pressable>
+		);
 	};
 
 	return (
 		<View style={styles.container}>
-			<CarruselImageComponent />
-			<View style={styles.ofertProductContainer}>
-				<Text style={styles.title}>Ofertas destacadas</Text>
+			<ScrollView>
+				<CarruselImageComponent />
+				<View style={styles.ofertProductContainer}>
+					<Text style={styles.title}>Ofertas destacadas</Text>
 
-				{}
-				<FlatList
-					data={ofertProducts}
-					keyExtractor={(item) => item.id}
-					renderItem={renderOfertproducts}
-				/>
-			</View>
+					{}
+					<FlatList
+						data={ofertProducts}
+						keyExtractor={(item) => item.id.toString()}
+						renderItem={renderOfertproducts}
+						numColumns={2}
+						columnWrapperStyle={styles.list}
+					/>
+				</View>
+			</ScrollView>
 		</View>
 	);
 };
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	title: {
+		fontWeight: "800",
+		fontSize: 32,
+		marginVertical: 24,
+		textAlign: "center",
+	},
+	list: {
+		justifyContent: "space-around",
+		marginBottom: 24,
+	},
+});

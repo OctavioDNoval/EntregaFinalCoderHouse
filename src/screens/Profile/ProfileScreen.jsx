@@ -19,7 +19,7 @@ import {
 	setUserLocalId,
 } from "../../Store/Slices/userSlice";
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
 	//Vamos a guardar un string vacio porque la imagen la recibimos en
 	//base64
 	const user = useSelector((state) => state.userSlice);
@@ -58,7 +58,10 @@ const ProfileScreen = () => {
 				</View>
 				<Text>{user.email}</Text>
 
-				<Pressable style={styles.editBtn}>
+				<Pressable
+					style={styles.editBtn}
+					onPress={() => navigation.navigate("editProfile")}
+				>
 					<Text>Editar perfil</Text>
 				</Pressable>
 				<InfoWrapperComponent profile={user} />
