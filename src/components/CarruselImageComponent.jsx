@@ -25,7 +25,7 @@ const CarruselImageComponent = () => {
 			let nextIndex = index === promoPic.length - 1 ? 0 : index + 1;
 
 			Animated.timing(translateX, {
-				toValue: -width * nextIndex,
+				toValue: -width * 0.8 * nextIndex,
 				duration: 500,
 				useNativeDriver: true,
 			}).start();
@@ -72,15 +72,26 @@ export default CarruselImageComponent;
 
 const styles = StyleSheet.create({
 	container: {
-		height: height * 0.65,
+		height: height * 0.6,
 		position: "relative",
+		width: width * 0.8,
+		overflow: "hidden",
+		borderRadius: 32,
+		borderColor: "#fff",
+		borderWidth: 2,
+		borderStyle: "solid",
+		shadowColor: "#000",
+		shadowOffset: { width: 4, height: 4 },
+		shadowRadius: 5,
+		shadowOpacity: 0.25,
+		backgroundColor: "#fff",
 	},
 	carrusel: {
 		flexDirection: "row",
 	},
 	image: {
-		height: height * 0.65,
-		width: width * 1,
+		height: height * 0.6,
+		width: width * 0.8,
 	},
 	punto: {
 		height: 8,

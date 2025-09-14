@@ -1,4 +1,5 @@
 import {
+	Dimensions,
 	FlatList,
 	Pressable,
 	ScrollView,
@@ -18,6 +19,8 @@ import { useEffect, useMemo } from "react";
 import CarruselImageComponent from "../../components/CarruselImageComponent";
 import { useGetProductsQuery } from "../../Services/shopAPI";
 import ProductContainerComponent from "../../components/ProductContainerComponent";
+
+const { width, height } = Dimensions.get("window");
 
 const HomeScreen = ({ navigation }) => {
 	const id = useSelector((state) => state.userSlice.localId);
@@ -62,7 +65,9 @@ const HomeScreen = ({ navigation }) => {
 	return (
 		<View style={styles.container}>
 			<ScrollView>
-				<CarruselImageComponent />
+				<View style={styles.carruselContainer}>
+					<CarruselImageComponent />
+				</View>
 				<View style={styles.ofertProductContainer}>
 					<Text style={styles.title}>Ofertas destacadas</Text>
 
@@ -92,5 +97,11 @@ const styles = StyleSheet.create({
 	list: {
 		justifyContent: "space-around",
 		marginBottom: 24,
+	},
+	carruselContainer: {
+		width: "100%",
+		height: height * 0.65,
+		justifyContent: "center",
+		alignItems: "center",
 	},
 });
