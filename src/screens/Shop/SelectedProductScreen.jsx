@@ -1,4 +1,5 @@
 import {
+	ActivityIndicator,
 	Image,
 	Pressable,
 	ScrollView,
@@ -9,12 +10,16 @@ import {
 import { colors } from "../../global/colors";
 import { useAddProductToCartMutation } from "../../Services/profileAPI";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 const SelectedProductScreen = ({ route }) => {
 	const { product } = route.params;
 
-	const [addToCart] = useAddProductToCartMutation();
+	const [addToCart, { isLoading, isSuccess }] = useAddProductToCartMutation();
 	const localId = useSelector((state) => state.userSlice.localId);
+
+	const navigation = useNavigation();
 
 	const handleAddCart = async () => {
 		try {
@@ -27,6 +32,13 @@ const SelectedProductScreen = ({ route }) => {
 			console.log(e);
 		}
 	};
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			navigation.goBack();
+		}, 1500);
+		return () => clearTimeout(timer);
+	}, [isSuccess]);
 
 	return (
 		<ScrollView>
@@ -52,17 +64,27 @@ const SelectedProductScreen = ({ route }) => {
 						<Text style={styles.originalPrice}>${product.price}</Text>
 					</View>
 				) : (
-					<Text style={styles.price}>{product.price}</Text>
+					<Text style={styles.price}>${product.price}</Text>
 				)}
 				<Text style={styles.desc}>{product.desc}</Text>
 				<Pressable
 					style={({ pressed }) => [
 						styles.addCartBtn,
 						pressed && { opacity: 0.8 },
+						isSuccess
+							? { backgroundColor: colors.succes }
+							: { backgroundColor: colors.secondary },
 					]}
 					onPress={handleAddCart}
+					disabled={isLoading}
 				>
-					<Text style={styles.addCartText}>Agregar al carrito</Text>
+					{isLoading ? (
+						<ActivityIndicator color={"#fff"} />
+					) : (
+						<Text style={styles.addCartText}>
+							{isSuccess ? "✔" : "Agregar al carrito"}
+						</Text>
+					)}
 				</Pressable>
 			</View>
 		</ScrollView>
@@ -113,7 +135,6 @@ const styles = StyleSheet.create({
 		fontStyle: "italic",
 	},
 	addCartBtn: {
-		backgroundColor: colors.secondary,
 		height: 40,
 		width: "75%",
 		alignSelf: "center",

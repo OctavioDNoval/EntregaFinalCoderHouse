@@ -1,27 +1,46 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../../screens/Home/HomeScreen";
-import CartScreen from "../../screens/Cart/CartScreen";
-import CategoriesScreen from "../../screens/Shop/CategoriesScreen";
 import ShopStackNavigator from "../Shop/ShopStackNavigator";
 import HomeStackNaigator from "../Shop/HomeStackNaigator";
 import CartStackNavigator from "../Cart/CartStackNavigator";
 import ProfileStackNavigator from "../Profile/ProfileStackNavigator";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { colors } from "../../global/colors";
 
 const Tab = createBottomTabNavigator();
 
 const TabsNavigator = () => {
 	return (
 		<Tab.Navigator
-			/*Screen options sirve para configurar como se van a ver
-               y comportar todas las pantallas del TAB*/
-			screenOptions={{
-				//oculta el header de la barra superior que react native
-				//agrega por defecto
+			screenOptions={({ route }) => ({
 				headerShown: false,
-				//quita el texto que aparece debajo de los iconos en el bottom tab
-				//por defecto muestra un icono y un texto, asi solo muestra el icono
-				/*tabBarShowLabel: false,*/
-			}}
+				tabBarShowLabel: false,
+				tabBarIcon: ({ focused, color, size }) => {
+					let iconName;
+
+					switch (route.name) {
+						case "Home":
+							iconName = "home";
+							break;
+						case "Cart":
+							iconName = "shopping-cart";
+							break;
+						case "Shop":
+							iconName = "store";
+							break;
+						case "profile":
+							iconName = "person";
+							break;
+					}
+
+					return (
+						<Icon
+							name={iconName}
+							size={focused ? 26 : 24}
+							color={focused ? colors.secondary : "grey"}
+						/>
+					);
+				},
+			})}
 		>
 			<Tab.Screen name="Home" component={HomeStackNaigator} />
 			<Tab.Screen name="Cart" component={CartStackNavigator} />

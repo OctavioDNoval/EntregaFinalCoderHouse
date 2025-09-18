@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
+	ActivityIndicator,
 	Image,
+	Modal,
 	Pressable,
 	ScrollView,
 	StyleSheet,
@@ -17,7 +19,12 @@ import {
 	useUpdateProfileLastNameMutation,
 	useUpdateProfileNameMutation,
 } from "../../Services/profileAPI";
-import { setUserCel, setUserLastName } from "../../Store/Slices/userSlice";
+import {
+	setUserCel,
+	setUserLastName,
+	setUserName,
+} from "../../Store/Slices/userSlice";
+import { useNavigation } from "@react-navigation/native";
 
 const EditProfileScreen = () => {
 	const user = useSelector((state) => state.userSlice);
@@ -26,31 +33,48 @@ const EditProfileScreen = () => {
 	const [newName, setNewName] = useState("");
 	const [newLastName, setNewLastName] = useState("");
 	const [newCel, setNewCel] = useState("");
+	const [loading, setLoading] = useState(false);
+	const [success, setSuccess] = useState(false);
 
+	const navigation = useNavigation();
 	const takePic = useTakePic();
 
-	const updateName = useUpdateProfileNameMutation();
-	const updateLastName = useUpdateProfileLastNameMutation();
-	const updateCel = useUpdateProfileCelMutation();
+	const [updateName] = useUpdateProfileNameMutation();
+	const [updateLastName] = useUpdateProfileLastNameMutation();
+	const [updateCel] = useUpdateProfileCelMutation();
 
 	const dispatch = useDispatch();
 
-	const handleEditProfile = () => {
+	useEffect(() => {
+		if (success) {
+			const timer = setTimeout(() => {
+				setSuccess(false);
+				navigation.goBack();
+				return () => clearTimeout(timer);
+			}, 1500);
+		}
+	}, [success]);
+
+	const handleEditProfile = async () => {
+		setLoading(true);
 		try {
 			if (newName) {
-				updateName({ localId: user.localId, name: newName });
+				await updateName({ localId: user.localId, name: newName });
 				dispatch(setUserName(newName));
 			}
 			if (newLastName) {
-				updateLastName({ localId: user.localId, lastname: newLastName });
+				await updateLastName({ localId: user.localId, lastname: newLastName });
 				dispatch(setUserLastName(newLastName));
 			}
 			if (newCel) {
-				updateCel({ localId: user.localId, cel: newCel });
+				await updateCel({ localId: user.localId, cel: newCel });
 				dispatch(setUserCel(newCel));
 			}
+			setSuccess(true);
 		} catch (e) {
 			console.log(e);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -92,8 +116,23 @@ const EditProfileScreen = () => {
 				]}
 				onPress={handleEditProfile}
 			>
-				<Text style={{ color: "#fff", fontWeight: "700" }}>Confirmar</Text>
+				{loading ? (
+					<ActivityIndicator color={"#fff"} />
+				) : (
+					<Text style={{ color: "#fff", fontWeight: "700" }}>Confirmar</Text>
+				)}
 			</Pressable>
+			<Modal visible={success} transparent={true} animationType="fade">
+				<View style={styles.modalWrapper}>
+					<View style={styles.modalContainer}>
+						<Image
+							style={styles.check}
+							source={require("../../../assets/AccountCreated.png")}
+							resizeMode="contain"
+						/>
+					</View>
+				</View>
+			</Modal>
 		</ScrollView>
 	);
 };
@@ -158,5 +197,23 @@ const styles = StyleSheet.create({
 		padding: 16,
 		alignItems: "center",
 		borderRadius: 16,
+	},
+	modalWrapper: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	modalContainer: {
+		backgroundColor: "rgba(0,0,0,0.5)",
+		borderRadius: 20,
+		padding: 20,
+		width: "50%",
+		aspectRatio: 1,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	check: {
+		width: "90%",
+		height: "90%",
 	},
 });
