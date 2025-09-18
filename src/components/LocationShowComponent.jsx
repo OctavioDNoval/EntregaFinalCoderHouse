@@ -33,7 +33,7 @@ const LocationShowComponent = () => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.addres}>Falta hacer la direccion con Api</Text>
+			{/*<Text style={styles.addres}>Falta hacer la direccion con Api</Text>*/}
 			{location ? (
 				<MapView
 					style={styles.map}

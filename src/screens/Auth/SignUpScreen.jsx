@@ -24,6 +24,7 @@ import {
 	useUpdateProfileNameMutation,
 } from "../../Services/profileAPI";
 import { ActivityIndicator } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const SignUpScreen = ({ navigation }) => {
 	const [email, setEmail] = useState("");
@@ -40,6 +41,9 @@ const SignUpScreen = ({ navigation }) => {
 	const [errorMsg, setErrorMsg] = useState("");
 	const [showModal, setShowModal] = useState(false);
 
+	const [showPassword, setShowPassword] = useState(false);
+	const [showConfirmPassword, setshowConfirmPassword] = useState(false);
+
 	const [triggerSignUp, result] = useSignupMutation();
 	const dispatch = useDispatch();
 
@@ -54,14 +58,36 @@ const SignUpScreen = ({ navigation }) => {
 	};
 
 	const handleSignUp = () => {
+		if (!checkEmptyField(email)) {
+			setErrorMsg("El email es obligatorio");
+			return;
+		}
+		if (!checkEmptyField(name)) {
+			setErrorMsg("El nombre no puede estar vacio");
+			return;
+		}
+
+		if (!checkEmptyField(lastName)) {
+			setErrorMsg("El apellido no puede estar vacio");
+			return;
+		}
+
+		if (!checkEmptyField(cel)) {
+			setErrorMsg("El celular no puede estar vacio");
+			return;
+		}
 		if (passwordConfirm != password) {
 			setErrorMsg("Las contrasenias no coinciden");
-		} else {
-			setErrorMsg("");
-			triggerSignUp({ email, password });
-			setShowModal(true);
-			//console.log(result);
+			return;
 		}
+		setErrorMsg("");
+		triggerSignUp({ email, password });
+		setShowModal(true);
+		//console.log(result);
+	};
+
+	const checkEmptyField = (field) => {
+		return field.trim().length > 0 ? true : false;
 	};
 
 	useEffect(() => {
@@ -84,18 +110,43 @@ const SignUpScreen = ({ navigation }) => {
 				placeholder="Email"
 				style={styles.input}
 			/>
-			<TextInput
-				onChangeText={(text) => setPassword(text)}
-				placeholder="Contrasenia"
-				style={styles.input}
-				secureTextEntry={true}
-			/>
-			<TextInput
-				onChangeText={(text) => setPasswordConfirm(text)}
-				placeholder="Confirmar contrasenia"
-				style={styles.input}
-				secureTextEntry={true}
-			/>
+			<View style={styles.passwordContainer}>
+				<TextInput
+					onChangeText={(text) => setPassword(text)}
+					placeholder="Contrasenia"
+					style={styles.input}
+					secureTextEntry={!showPassword}
+				/>
+				<Pressable
+					style={styles.iconPassword}
+					onPress={() => setShowPassword(!showPassword)}
+				>
+					<MaterialCommunityIcons
+						name={showPassword ? "eye-off" : "eye"}
+						size={24}
+						color="grey"
+					/>
+				</Pressable>
+			</View>
+
+			<View style={styles.passwordContainer}>
+				<TextInput
+					onChangeText={(text) => setPasswordConfirm(text)}
+					placeholder="Confirmar contrasenia"
+					style={styles.input}
+					secureTextEntry={!showConfirmPassword}
+				/>
+				<Pressable
+					style={styles.iconPassword}
+					onPress={() => setshowConfirmPassword(!showConfirmPassword)}
+				>
+					<MaterialCommunityIcons
+						name={showConfirmPassword ? "eye-off" : "eye"}
+						size={24}
+						color="grey"
+					/>
+				</Pressable>
+			</View>
 
 			{errorMsg ? <Text style={styles.errorMsg}>{errorMsg}</Text> : null}
 
@@ -212,5 +263,14 @@ const styles = StyleSheet.create({
 	},
 	h1: {
 		fontSize: 32,
+	},
+	iconPassword: {
+		position: "absolute",
+		right: 8,
+		top: "50%",
+		transform: [{ translateY: -12 }],
+	},
+	passwordContainer: {
+		flexDirection: "row",
 	},
 });
