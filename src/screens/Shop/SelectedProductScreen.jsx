@@ -34,10 +34,13 @@ const SelectedProductScreen = ({ route }) => {
 	};
 
 	useEffect(() => {
-		const timer = setTimeout(() => {
-			navigation.goBack();
-		}, 1500);
-		return () => clearTimeout(timer);
+		if (isSuccess) {
+			const timer = setTimeout(() => {
+				navigation.goBack();
+			}, 1500);
+
+			return () => clearTimeout(timer);
+		}
 	}, [isSuccess]);
 
 	return (

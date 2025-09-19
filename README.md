@@ -20,3 +20,25 @@ La aplicacion fue desarrollada principalmente en el entorno del front-end con Re
 - **Manejo de carrito en tiempo real:** Al tocar el botón dentro de la pantalla del producto, el mismo producto, se manda a la parte del carrito de base de datos, relacionada al LocalId del usuario y en el momento se actualiza en la pantalla del carrito, asimismo, en la eliminación de productos
 
 - **Manejo de perfil:** En la pantalla de perfil, aparte de mostrarnos toda la información recolectada del signup, nos da la opción de cambiarla en la parte del edit profile. Tenemos la opción para ver la información de usuario, y otra que por razones del scope del curso nos muestra la ubicación tomada desde el dispositivo
+
+# Dependencias del proyecto
+
+## Dependencies
+
+- @react-navigation/bottom-tabs: ^7.4.6
+- @react-navigation/native: ^7.1.17
+- @react-navigation/native-stack: ^7.3.25
+- @react-navigation/stack: ^7.4.7
+- @reduxjs/toolkit: ^2.8.2
+- expo: 54.0.3
+- expo-file-system: ~19.0.12
+- expo-image-picker: ~17.0.8
+- expo-location: ~19.0.7
+- expo-sqlite: ~16.0.8
+- expo-status-bar: ~3.0.8
+- firebase: ^12.2.1
+- react: 19.1.0
+- react-native: 0.81.4
+- react-native-maps: 1.20.1
+- react-native-vector-icons: ^10.3.0
+- react-redux: ^9.2.0

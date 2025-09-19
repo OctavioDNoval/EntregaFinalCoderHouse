@@ -25,6 +25,7 @@ import {
 	setUserName,
 } from "../../Store/Slices/userSlice";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const EditProfileScreen = () => {
 	const user = useSelector((state) => state.userSlice);
@@ -83,7 +84,7 @@ const EditProfileScreen = () => {
 			<View style={[styles.imgEdit, styles.bottomBorder]}>
 				<Pressable style={styles.editPic} onPress={takePic}>
 					<View style={styles.editBtn}>
-						<Icon name="photo-camera" size={48} color={"#fff"} />
+						<MaterialCommunityIcons name="camera" size={48} color={"#fff"} />
 					</View>
 					<Image
 						style={styles.img}

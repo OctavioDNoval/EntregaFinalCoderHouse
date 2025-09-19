@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useTakePic } from "../Services/useTakePic";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const CameraIconComponent = () => {
 	const takePic = useTakePic();
@@ -8,7 +9,7 @@ const CameraIconComponent = () => {
 	return (
 		<Pressable onPress={takePic}>
 			<View style={styles.cameraContainer}>
-				<Icon name="photo-camera" size={32} />
+				<MaterialCommunityIcons name="camera" size={32} />
 			</View>
 		</Pressable>
 	);

@@ -5,6 +5,7 @@ import CartStackNavigator from "../Cart/CartStackNavigator";
 import ProfileStackNavigator from "../Profile/ProfileStackNavigator";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { colors } from "../../global/colors";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,18 +23,18 @@ const TabsNavigator = () => {
 							iconName = "home";
 							break;
 						case "Cart":
-							iconName = "shopping-cart";
+							iconName = "cart";
 							break;
 						case "Shop":
 							iconName = "store";
 							break;
 						case "profile":
-							iconName = "person";
+							iconName = "account";
 							break;
 					}
 
 					return (
-						<Icon
+						<MaterialCommunityIcons
 							name={iconName}
 							size={focused ? 26 : 24}
 							color={focused ? colors.secondary : "grey"}
